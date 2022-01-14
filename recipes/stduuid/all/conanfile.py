@@ -22,9 +22,11 @@ class StduuidConan(ConanFile):
         os.rename(extracted_dir, self._source_subfolder)
 
     def requirements(self):
-        self.requires("ms-gsl/2.0.0")
-        if self.settings.os != "Windows":
-            self.requires("libuuid/1.0.3")
+        tools.get(**self.conan_data["sources"][self.version])
+        if self.version == "1.0":
+            self.requires("ms-gsl/2.0.0")
+            if self.settings.os != "Windows":
+                self.requires("libuuid/1.0.3")
 
     def configure(self):
         version = Version( self.settings.compiler.version )
